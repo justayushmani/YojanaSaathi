@@ -1,0 +1,17 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@theme inline {
+  --color-background: #FFFDF9;
+  --color-foreground: #1A1A1A;
+  --color-accent: #FF5A00;
+  --color-secondary: #1D4ED8;
+  --color-success: #059669;
+  
+  --font-sans: var(--font-plus-jakarta-sans), ui-sans-serif, system-ui, sans-serif;
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+}
