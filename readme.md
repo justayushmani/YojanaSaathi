@@ -8,7 +8,6 @@ This project is built as an npm workspace monorepo containing:
 - **`apps/api-server`**: The Express.js backend using TypeScript, Multer, and the Google GenAI SDK.
 
 ---
-
 ## Complete Setup Guide
 
 Follow these instructions to run the project locally on your PC.
