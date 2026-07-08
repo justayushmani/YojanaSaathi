@@ -3,6 +3,10 @@ import cors from 'cors';
 import multer from 'multer';
 import dotenv from 'dotenv';
 import { VoiceController } from './controllers/voice.controller';
+import { setDefaultResultOrder } from 'node:dns';
+
+// Fix Node.js fetch failing on some networks with IPv6 for Google APIs
+setDefaultResultOrder('ipv4first');
 
 // Load environment variables
 dotenv.config();
@@ -28,6 +32,15 @@ app.post('/api/match-voice', upload.single('audio'), VoiceController.handleAudio
 
 // 2. Document simplify endpoint
 app.post('/api/simplify-document', upload.single('document'), VoiceController.handleDocumentSimplify);
+
+// 3. Chat endpoint
+app.post('/api/chat', VoiceController.handleChat);
+
+// 4. Reactive scheme recommendation endpoint
+app.post('/api/recommend-schemes', VoiceController.handleRecommendSchemes);
+
+// 5. Reactive document translation endpoint
+app.post('/api/translate-markdown', VoiceController.handleTranslateMarkdown);
 
 // Start Server
 app.listen(port, () => {

@@ -5,7 +5,8 @@ import { QdrantClient } from '@qdrant/js-client-rest';
 // Initialize Qdrant Client (Mock or real depending on env)
 const qdrantClient = new QdrantClient({
   url: process.env.QDRANT_URL || 'http://localhost:6333',
-  apiKey: process.env.QDRANT_API_KEY
+  apiKey: process.env.QDRANT_API_KEY,
+  checkCompatibility: false
 });
 
 export class VoiceController {
@@ -23,7 +24,8 @@ export class VoiceController {
       }
 
       // Step 1: Extract Profile from Audio
-      const profileJsonStr = await GeminiService.extractProfileFromAudio(file.buffer, file.mimetype);
+      const language = req.body.language || 'English';
+      const profileJsonStr = await GeminiService.extractProfileFromAudio(file.buffer, file.mimetype, language);
       
       let profile;
       try {
@@ -36,35 +38,28 @@ export class VoiceController {
         });
         return;
       }
+      
+      // Check if profile is completely empty
+      const isProfileEmpty = !profile.age && !profile.income && !profile.occupation && !profile.state;
 
-      // Step 2: In a real system, we would embed this profile to a vector. 
-      // For this architecture, we will mock the embedding or query Qdrant directly with filters.
-      // We simulate querying Qdrant for matching schemes.
-      let schemes = [];
+      // Step 2: Use Gemini to recommend schemes based on the profile
+      let schemes: any[] = [];
       try {
-        // Mock query - in production, we would convert the profile to a vector first
-        // const vector = await getEmbedding(JSON.stringify(profile));
-        // const searchResult = await qdrantClient.search('schemes', { vector, limit: 3 });
-        
-        // Simulating matching schemes based on extracted profile
-        schemes = [
-          {
-            id: 'scheme_1',
-            title: 'PM Kisan Samman Nidhi',
-            description: 'Income support of Rs.6000/- per year in three equal installments to all land holding farmer families.',
-            matchReason: `Matched occupation: ${profile.occupation || 'Farmer'}`
-          },
-          {
-            id: 'scheme_2',
-            title: 'Ayushman Bharat Yojana',
-            description: 'Health insurance coverage of Rs.5 lakhs per family per year for secondary and tertiary care hospitalization.',
-            matchReason: `Matched income profile: ${profile.income || 'Low Income'}`
-          }
-        ];
-      } catch (qdrantError) {
-        console.error('Qdrant Query Error:', qdrantError);
-        // Fallback if Qdrant fails
-        schemes = [{ id: 'error', title: 'Could not load schemes', description: 'Database unavailable' }];
+        if (!isProfileEmpty) {
+          schemes = await GeminiService.recommendSchemes(profile, language);
+        }
+      } catch (geminiError) {
+        console.error('Gemini Scheme Recommendation Error:', geminiError);
+        // Fallback if Gemini fails
+        schemes = [{ 
+          title: 'Error Loading Schemes', 
+          description: 'Could not fetch personalized recommendations at this time.', 
+          matchReason: 'Service Unavailable',
+          fullDetails: 'Please try again later or consult your local panchayat office.',
+          howToApply: 'N/A',
+          documentsRequired: [],
+          portalLink: ''
+        }];
       }
 
       // Step 3: Return unified response
@@ -85,6 +80,60 @@ export class VoiceController {
   }
 
   /**
+   * Controller for Reactive Scheme Translation
+   */
+  static async handleRecommendSchemes(req: Request, res: Response): Promise<void> {
+    try {
+      const { profile, language } = req.body;
+      if (!profile) {
+        res.status(400).json({ error: 'Profile is required.' });
+        return;
+      }
+
+      const schemes = await GeminiService.recommendSchemes(profile, language || 'English');
+
+      res.status(200).json({
+        success: true,
+        schemes
+      });
+    } catch (error: any) {
+      console.error('Error in VoiceController.handleRecommendSchemes:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Could not fetch scheme recommendations.',
+        details: error.message
+      });
+    }
+  }
+
+  /**
+   * Controller for Reactive Markdown Translation
+   */
+  static async handleTranslateMarkdown(req: Request, res: Response): Promise<void> {
+    try {
+      const { markdown, language } = req.body;
+      if (!markdown) {
+        res.status(400).json({ error: 'Markdown text is required.' });
+        return;
+      }
+
+      const translatedMarkdown = await GeminiService.translateMarkdown(markdown, language || 'English');
+
+      res.status(200).json({
+        success: true,
+        markdown: translatedMarkdown
+      });
+    } catch (error: any) {
+      console.error('Error in VoiceController.handleTranslateMarkdown:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Could not translate markdown.',
+        details: error.message
+      });
+    }
+  }
+
+  /**
    * Controller for Document Simplifier Tab
    */
   static async handleDocumentSimplify(req: Request, res: Response): Promise<void> {
@@ -95,7 +144,8 @@ export class VoiceController {
         return;
       }
 
-      const simplifiedMarkdown = await GeminiService.simplifyDocumentImage(file.buffer, file.mimetype);
+      const language = req.body.language || 'English';
+      const simplifiedMarkdown = await GeminiService.simplifyDocumentImage(file.buffer, file.mimetype, language);
 
       res.status(200).json({
         success: true,
@@ -107,6 +157,35 @@ export class VoiceController {
       res.status(500).json({
         success: false,
         error: 'Could not process the document image.',
+        details: error.message
+      });
+    }
+  }
+
+  /**
+   * Controller for Saathi AI Chat
+   */
+  static async handleChat(req: Request, res: Response): Promise<void> {
+    try {
+      const { message, history = [], language = 'English' } = req.body;
+      
+      if (!message) {
+        res.status(400).json({ error: 'Message is required.' });
+        return;
+      }
+
+      const responseText = await GeminiService.processChat(message, history, language);
+
+      res.status(200).json({
+        success: true,
+        response: responseText
+      });
+
+    } catch (error: any) {
+      console.error('Error in VoiceController.handleChat:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Could not process chat message.',
         details: error.message
       });
     }

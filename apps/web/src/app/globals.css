@@ -2,13 +2,24 @@
 @plugin "@tailwindcss/typography";
 
 @theme inline {
-  --color-background: #FFFDF9;
-  --color-foreground: #1A1A1A;
+  --color-background: #f0f0f0;
+  --color-foreground: #000000;
   --color-accent: #FF5A00;
   --color-secondary: #1D4ED8;
   --color-success: #059669;
   
   --font-sans: var(--font-plus-jakarta-sans), ui-sans-serif, system-ui, sans-serif;
+
+  --animate-ticker: ticker 20s linear infinite;
+  @keyframes ticker {
+    0% { transform: translateX(100%); }
+    100% { transform: translateX(-100%); }
+  }
+}
+
+@keyframes marquee {
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
 }
 
 body {
