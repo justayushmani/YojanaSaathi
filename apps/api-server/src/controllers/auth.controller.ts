@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import db from '../db/sqlite';
+import pool from '../db/postgres';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'super-secret-key-change-me-in-prod';
 
@@ -16,9 +16,8 @@ export class AuthController {
       }
 
       // Check if user exists
-      const stmtCheck = db.prepare('SELECT * FROM users WHERE email = ?');
-      const existingUser = stmtCheck.get(email);
-      if (existingUser) {
+      const checkResult = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
+      if (checkResult.rows.length > 0) {
         res.status(400).json({ error: 'User with this email already exists' });
         return;
       }
@@ -28,9 +27,11 @@ export class AuthController {
       const hashedPassword = await bcrypt.hash(password, salt);
 
       // Insert user
-      const stmtInsert = db.prepare('INSERT INTO users (name, email, password) VALUES (?, ?, ?)');
-      const info = stmtInsert.run(name, email, hashedPassword);
-      const userId = info.lastInsertRowid;
+      const insertResult = await pool.query(
+        'INSERT INTO users (name, email, password) VALUES ($1, $2, $3) RETURNING id',
+        [name, email, hashedPassword]
+      );
+      const userId = insertResult.rows[0].id;
 
       // Generate JWT
       const token = jwt.sign({ userId, email, name }, JWT_SECRET, { expiresIn: '7d' });
@@ -60,8 +61,8 @@ export class AuthController {
       }
 
       // Find user
-      const stmt = db.prepare('SELECT * FROM users WHERE email = ?');
-      const user = stmt.get(email) as any;
+      const result = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
+      const user = result.rows[0];
 
       if (!user) {
         res.status(401).json({ error: 'Invalid email or password' });
@@ -111,8 +112,8 @@ export class AuthController {
 
       const decoded = jwt.verify(token, JWT_SECRET) as any;
       
-      const stmt = db.prepare('SELECT id, name, email FROM users WHERE id = ?');
-      const user = stmt.get(decoded.userId);
+      const result = await pool.query('SELECT id, name, email FROM users WHERE id = $1', [decoded.userId]);
+      const user = result.rows[0];
 
       if (!user) {
         res.status(404).json({ error: 'User not found' });
