@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
-import { ArrowRight, Mic, CheckCircle2, AlertTriangle, Play, Square, RotateCcw, AlertOctagon } from "lucide-react";
+import { ArrowRight, Mic, CheckCircle, AlertTriangle, Play, Square, RotateCcw, AlertOctagon } from "lucide-react";
 import { useLanguage } from "../contexts/LanguageContext";
 
 export default function VoiceMatcher() {
