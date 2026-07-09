@@ -1,8 +1,14 @@
 import Database from 'better-sqlite3';
 import path from 'path';
+import fs from 'fs';
 
-// Create or open the SQLite database file
-const dbPath = path.resolve(process.cwd(), 'yojana.db');
+// Use DATA_DIR from env for Render disk, otherwise default to current directory
+const dataDir = process.env.DATA_DIR || process.cwd();
+if (!fs.existsSync(dataDir)) {
+  fs.mkdirSync(dataDir, { recursive: true });
+}
+
+const dbPath = path.join(dataDir, 'yojana.db');
 const db = new Database(dbPath, { verbose: console.log });
 
 // Initialize the users table
