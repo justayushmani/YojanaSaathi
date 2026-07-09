@@ -34,6 +34,10 @@ const upload = multer({
 });
 
 // Routes
+app.get('/', (req, res) => {
+  res.status(200).json({ status: 'ok', message: 'Yojana-Saathi API is running' });
+});
+
 // 1. Voice match endpoint
 app.post('/api/match-voice', requireAuth, upload.single('audio'), VoiceController.handleAudioMatch);
 
