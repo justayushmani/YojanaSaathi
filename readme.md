@@ -1,6 +1,6 @@
-# Jan-Sahayak - AI Civic & Legal Empowerment Platform
+# Yojana-Saathi - AI Civic & Legal Empowerment Platform
 
-Jan-Sahayak is an end-to-end multimodal platform engineered for India's Next Billion Users. It features a Neo-Pop Brutalist UI, a Voice Scheme Matcher, and an AI-driven Document Simplifier using Google's Gemini 2.5 Flash model.
+Yojana-Saathi is an end-to-end multimodal platform engineered for India's Next Billion Users. It features a Neo-Pop Brutalist UI, a Voice Scheme Matcher, and an AI-driven Document Simplifier using Google's Gemini 2.5 Flash model.
 
 ## Project Architecture
 This project is built as an npm workspace monorepo containing:

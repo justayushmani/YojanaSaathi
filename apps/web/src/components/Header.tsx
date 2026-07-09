@@ -16,7 +16,7 @@ export default function Header() {
           {/* Left Side: Branding */}
           <div className="flex items-center gap-3">
             <h1 className="text-3xl font-extrabold uppercase tracking-tight text-black">
-              Jan-Sahayak
+              Yojana-Saathi
             </h1>
             <span className="bg-[#FF5A00] text-white text-xs font-bold px-2 py-1 uppercase border-2 border-black rotate-3 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
               Beta

@@ -20,7 +20,8 @@ export default function DocSimplifier() {
   useEffect(() => {
     if (docStatus === "success" && docResult) {
       setDocStatus("processing");
-      fetch("http://localhost:4000/api/translate-markdown", {
+      const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
+      fetch(`${API_URL}/api/translate-markdown`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ markdown: docResult, language })
@@ -89,7 +90,8 @@ export default function DocSimplifier() {
       formData.append("language", language);
 
       setDocStatus("processing");
-      const response = await fetch("http://localhost:4000/api/simplify-document", {
+      const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
+      const response = await fetch(`${API_URL}/api/simplify-document`, {
         method: "POST",
         body: formData,
       });

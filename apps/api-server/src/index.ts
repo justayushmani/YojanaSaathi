@@ -44,5 +44,5 @@ app.post('/api/translate-markdown', VoiceController.handleTranslateMarkdown);
 
 // Start Server
 app.listen(port, () => {
-  console.log(`[Jan-Sahayak API] Server is running on port ${port}`);
+  console.log(`[Yojana-Saathi API] Server is running on port ${port}`);
 });

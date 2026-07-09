@@ -11,7 +11,7 @@ const plusJakartaSans = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Jan-Sahayak | AI Civic & Legal Empowerment",
+  title: "Yojana-Saathi | AI Civic & Legal Empowerment",
   description: "AI Civic & Legal Empowerment Platform for India's Next Billion",
 };
 

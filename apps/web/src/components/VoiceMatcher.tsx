@@ -62,7 +62,8 @@ export default function VoiceMatcher() {
       formData.append("audio", audioBlob, "recording.webm");
       formData.append("language", language);
 
-      const response = await fetch("http://localhost:4000/api/match-voice", {
+      const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
+      const response = await fetch(`${API_URL}/api/match-voice`, {
         method: "POST",
         body: formData,
       });
@@ -87,7 +88,8 @@ export default function VoiceMatcher() {
     if (voiceStatus === "success" && voiceResult?.profile) {
       // Show processing status while translating
       setVoiceStatus("processing");
-      fetch("http://localhost:4000/api/recommend-schemes", {
+      const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
+      fetch(`${API_URL}/api/recommend-schemes`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ profile: voiceResult.profile, language })
