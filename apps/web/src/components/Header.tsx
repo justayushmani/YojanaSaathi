@@ -4,10 +4,13 @@ import React, { useState } from "react";
 import { User, Info, Globe, X } from "lucide-react";
 import { useLanguage, LanguageType } from "../contexts/LanguageContext";
 
+import { SignInButton, UserButton, useAuth } from "@clerk/nextjs";
+
 export default function Header() {
   const { language, setLanguage, dict } = useLanguage();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [isAboutModalOpen, setIsAboutModalOpen] = useState(false);
+  const { isLoaded, isSignedIn } = useAuth();
 
   return (
     <>
@@ -59,10 +62,26 @@ export default function Header() {
               <Info size={18} strokeWidth={3} /> {dict.aboutPlatform}
             </button>
 
-            {/* Profile Avatar */}
-            <div className="w-10 h-10 bg-[#1D4ED8] border-2 border-black rounded-none shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] flex items-center justify-center cursor-pointer hover:bg-[#FF5A00] transition-colors">
-              <User className="text-white" size={20} strokeWidth={3} />
-            </div>
+            {/* Clerk Authentication */}
+            {isLoaded && !isSignedIn && (
+              <SignInButton>
+                <button className="flex items-center gap-2 bg-[#1D4ED8] text-white border-2 border-black px-4 py-2 font-black uppercase text-sm shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:bg-[#FF5A00] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[0px_0px_0px_0px_rgba(0,0,0,1)] transition-all">
+                  Sign In
+                </button>
+              </SignInButton>
+            )}
+            
+            {isLoaded && isSignedIn && (
+              <div className="w-10 h-10 border-2 border-black rounded-full overflow-hidden shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] flex items-center justify-center hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] transition-all">
+                <UserButton 
+                  appearance={{
+                    elements: {
+                      userButtonAvatarBox: "w-full h-full rounded-none"
+                    }
+                  }}
+                />
+              </div>
+            )}
           </div>
         </div>
       </header>

@@ -56,6 +56,36 @@ export const t = {
     aboutVoiceMatcher: "Speak naturally in English, Hindi, or Hinglish. We extract your profile (Age, Income, Occupation) from your audio and instantly query a vector database to find exactly which Government Schemes you are eligible for.",
     aboutDocSimplifier: "Got a confusing legal notice or FIR? Upload a picture of it. Our AI parses the document and outputs a simple 3-bullet-point summary explaining exactly what it means and what you need to do next.",
     aboutSaathiChat: "Need more help? Tap the floating chat bubble on the bottom right. Sahayak AI is always available to answer your civic questions.",
+    trendingSchemesList: [
+      { 
+        title: "PM Kisan Samman Nidhi", category: "Agriculture", tagColor: "bg-green-500",
+        description: "Financial support of ₹6000 per year to small and marginal farmers.",
+        howToApply: "Visit the PM Kisan portal and register via your Aadhaar card and land documents.",
+        documentsRequired: ["Aadhaar Card", "Land holding papers", "Bank Account Details"],
+        portalLink: "https://pmkisan.gov.in/"
+      },
+      { 
+        title: "Ayushman Bharat", category: "Health", tagColor: "bg-blue-500",
+        description: "Health insurance scheme providing coverage of up to ₹5 lakh per family per year.",
+        howToApply: "Visit your nearest CSC or empanelled hospital to verify your eligibility and get your Ayushman card.",
+        documentsRequired: ["Aadhaar Card", "Ration Card", "Income Certificate"],
+        portalLink: "https://pmjay.gov.in/"
+      },
+      { 
+        title: "Sukanya Samriddhi", category: "Education", tagColor: "bg-pink-500",
+        description: "Savings scheme for the girl child offering higher interest rates and tax benefits.",
+        howToApply: "Open an account in any post office or authorized commercial bank.",
+        documentsRequired: ["Birth Certificate of Girl Child", "Identity proof of parent", "Address proof"],
+        portalLink: "https://www.indiapost.gov.in/"
+      },
+      { 
+        title: "PMAY (Gramin)", category: "Housing", tagColor: "bg-orange-500",
+        description: "Housing for all rural scheme providing financial assistance for constructing a pucca house.",
+        howToApply: "Apply through your Gram Panchayat or visit the PMAY-G portal.",
+        documentsRequired: ["Aadhaar Card", "Job Card", "Bank Details", "Swachh Bharat Mission Number"],
+        portalLink: "https://pmayg.nic.in/"
+      }
+    ],
   },
   Hindi: {
     aboutPlatform: "प्लेटफ़ॉर्म के बारे में",
@@ -108,6 +138,36 @@ export const t = {
     aboutVoiceMatcher: "अंग्रेजी, हिंदी या हिंग्लिश में स्वाभाविक रूप से बोलें। हम आपके ऑडियो से आपकी प्रोफ़ाइल (उम्र, आय, पेशा) निकालते हैं और तुरंत यह पता लगाते हैं कि आप किन सरकारी योजनाओं के लिए पात्र हैं।",
     aboutDocSimplifier: "कोई भ्रमित करने वाला कानूनी नोटिस या FIR मिली है? उसकी एक तस्वीर अपलोड करें। हमारा AI दस्तावेज़ का विश्लेषण करता है और एक सरल 3-बिंदु सारांश देता है जो स्पष्ट रूप से समझाता है कि इसका क्या अर्थ है और आपको आगे क्या करने की आवश्यकता है।",
     aboutSaathiChat: "क्या अधिक मदद चाहिए? नीचे दाईं ओर तैरते चैट बुलबुले पर टैप करें। सहायक AI आपके नागरिक प्रश्नों का उत्तर देने के लिए हमेशा उपलब्ध है।",
+    trendingSchemesList: [
+      { 
+        title: "पीएम किसान सम्मान निधि", category: "कृषि", tagColor: "bg-green-500",
+        description: "छोटे और सीमांत किसानों को प्रति वर्ष ₹6000 की वित्तीय सहायता।",
+        howToApply: "पीएम किसान पोर्टल पर जाएं और अपने आधार कार्ड और भूमि दस्तावेजों के माध्यम से पंजीकरण करें।",
+        documentsRequired: ["आधार कार्ड", "भूमि के कागजात", "बैंक खाता विवरण"],
+        portalLink: "https://pmkisan.gov.in/"
+      },
+      { 
+        title: "आयुष्मान भारत", category: "स्वास्थ्य", tagColor: "bg-blue-500",
+        description: "प्रति परिवार प्रति वर्ष ₹5 लाख तक का कवरेज प्रदान करने वाली स्वास्थ्य बीमा योजना।",
+        howToApply: "अपनी पात्रता सत्यापित करने और अपना आयुष्मान कार्ड प्राप्त करने के लिए अपने नजदीकी सीएससी या सूचीबद्ध अस्पताल में जाएं।",
+        documentsRequired: ["आधार कार्ड", "राशन कार्ड", "आय प्रमाण पत्र"],
+        portalLink: "https://pmjay.gov.in/"
+      },
+      { 
+        title: "सुकन्या समृद्धि", category: "शिक्षा", tagColor: "bg-pink-500",
+        description: "बालिका के लिए बचत योजना जो उच्च ब्याज दर और कर लाभ प्रदान करती है।",
+        howToApply: "किसी भी डाकघर या अधिकृत वाणिज्यिक बैंक में खाता खोलें।",
+        documentsRequired: ["बालिका का जन्म प्रमाण पत्र", "माता-पिता का पहचान प्रमाण", "पता प्रमाण"],
+        portalLink: "https://www.indiapost.gov.in/"
+      },
+      { 
+        title: "पीएमएवाई (ग्रामीण)", category: "आवास", tagColor: "bg-orange-500",
+        description: "पक्का घर बनाने के लिए वित्तीय सहायता प्रदान करने वाली सभी के लिए आवास ग्रामीण योजना।",
+        howToApply: "अपनी ग्राम पंचायत के माध्यम से आवेदन करें या PMAY-G पोर्टल पर जाएं।",
+        documentsRequired: ["आधार कार्ड", "जॉब कार्ड", "बैंक विवरण", "स्वच्छ भारत मिशन नंबर"],
+        portalLink: "https://pmayg.nic.in/"
+      }
+    ],
   },
   Hinglish: {
     aboutPlatform: "Platform ke baare mein",
@@ -160,6 +220,36 @@ export const t = {
     aboutVoiceMatcher: "English, Hindi, ya Hinglish mein naturally bolein. Hum aapke audio se aapki profile (Age, Income, Occupation) nikalte hain aur turant pata lagate hain ki aap kis Government Schemes ke liye eligible hain.",
     aboutDocSimplifier: "Koi confusing legal notice ya FIR mili hai? Uski picture upload karein. Hamara AI document ko parse karta hai aur ek simple 3-bullet-point summary deta hai jo explain karta hai ki iska kya matlab hai aur aapko aage kya karna hai.",
     aboutSaathiChat: "Kya aur madad chahiye? Bottom right mein floating chat bubble par tap karein. Sahayak AI aapke civic questions ka answer dene ke liye hamesha available hai.",
+    trendingSchemesList: [
+      { 
+        title: "PM Kisan Samman Nidhi", category: "Agriculture", tagColor: "bg-green-500",
+        description: "Chhote aur seemant kisano ko har saal ₹6000 ki financial help.",
+        howToApply: "PM Kisan portal par jayein aur apne Aadhaar card aur land documents ke through register karein.",
+        documentsRequired: ["Aadhaar Card", "Land papers", "Bank Account Details"],
+        portalLink: "https://pmkisan.gov.in/"
+      },
+      { 
+        title: "Ayushman Bharat", category: "Health", tagColor: "bg-blue-500",
+        description: "Health insurance scheme jo har saal per family ₹5 lakh tak ka cover deti hai.",
+        howToApply: "Apni eligibility check karne aur Ayushman card lene ke liye nearest CSC ya hospital jayein.",
+        documentsRequired: ["Aadhaar Card", "Ration Card", "Income Certificate"],
+        portalLink: "https://pmjay.gov.in/"
+      },
+      { 
+        title: "Sukanya Samriddhi", category: "Education", tagColor: "bg-pink-500",
+        description: "Girl child ke liye savings scheme jo high interest rate aur tax benefits deti hai.",
+        howToApply: "Kisi bhi post office ya authorized bank mein account open karein.",
+        documentsRequired: ["Girl Child ka Birth Certificate", "Parent ka ID proof", "Address proof"],
+        portalLink: "https://www.indiapost.gov.in/"
+      },
+      { 
+        title: "PMAY (Gramin)", category: "Housing", tagColor: "bg-orange-500",
+        description: "Pucca ghar banane ke liye financial help dene wali rural housing scheme.",
+        howToApply: "Apni Gram Panchayat ke through apply karein ya PMAY-G portal par jayein.",
+        documentsRequired: ["Aadhaar Card", "Job Card", "Bank Details", "Swachh Bharat Mission Number"],
+        portalLink: "https://pmayg.nic.in/"
+      }
+    ]
   }
 };
 

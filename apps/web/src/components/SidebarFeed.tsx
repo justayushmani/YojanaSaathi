@@ -1,42 +1,70 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { TrendingUp, AlertTriangle } from "lucide-react";
 import { useLanguage } from "../contexts/LanguageContext";
 
 export default function SidebarFeed() {
   const { dict } = useLanguage();
-  const trendingSchemes = [
-    { title: "PM Kisan Samman Nidhi", category: "Agriculture", tagColor: "bg-green-500" },
-    { title: "Ayushman Bharat", category: "Health", tagColor: "bg-blue-500" },
-    { title: "Sukanya Samriddhi", category: "Education", tagColor: "bg-pink-500" },
-    { title: "PMAY (Gramin)", category: "Housing", tagColor: "bg-orange-500" },
-  ];
+  const [expandedSchemeIdx, setExpandedSchemeIdx] = useState<number | null>(null);
 
   return (
     <div className="flex flex-col gap-6 h-full">
       {/* Card 1: Trending Govt Schemes */}
-      <div className="bg-white border-4 border-black p-4 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] flex flex-col flex-1">
+      <div className="bg-white border-4 border-black p-4 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] flex flex-col flex-1 max-h-[60vh]">
         <h3 className="text-xl font-extrabold uppercase mb-4 flex items-center gap-2 border-b-4 border-black pb-2">
           <TrendingUp size={24} strokeWidth={3} className="text-[#FF5A00]" />
           {dict.trendingSchemes}
         </h3>
         <div className="overflow-y-auto pr-2 space-y-4">
-          {trendingSchemes.map((scheme, idx) => (
-            <div
-              key={idx}
-              className="border-2 border-black p-3 bg-[#f7f7f7] hover:bg-[#FF5A00] hover:text-white transition-colors cursor-pointer group shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]"
-            >
-              <h4 className="font-bold text-lg leading-tight mb-2 group-hover:text-white text-black">
-                {scheme.title}
-              </h4>
-              <span
-                className={`${scheme.tagColor} text-white text-xs font-bold px-2 py-1 uppercase border-2 border-black shadow-[1px_1px_0px_0px_rgba(0,0,0,1)]`}
+          {dict.trendingSchemesList.map((scheme, idx) => {
+            const isExpanded = expandedSchemeIdx === idx;
+            return (
+              <div
+                key={idx}
+                onClick={() => setExpandedSchemeIdx(isExpanded ? null : idx)}
+                className="border-2 border-black p-3 bg-[#f7f7f7] hover:bg-[#FF5A00] hover:text-white transition-colors cursor-pointer group shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]"
               >
-                {scheme.category}
-              </span>
-            </div>
-          ))}
+                <h4 className="font-bold text-lg leading-tight mb-2 group-hover:text-white text-black">
+                  {scheme.title}
+                </h4>
+                <span
+                  className={`${scheme.tagColor} text-white text-xs font-bold px-2 py-1 uppercase border-2 border-black shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] inline-block`}
+                >
+                  {scheme.category}
+                </span>
+
+                {isExpanded && (
+                  <div className="mt-4 border-t-2 border-black pt-3 group-hover:text-white text-black animate-in slide-in-from-top-2 fade-in cursor-default" onClick={(e) => e.stopPropagation()}>
+                    <p className="text-sm font-semibold mb-3">{scheme.description}</p>
+                    
+                    <div className="mb-3 bg-white text-black border-2 border-black p-2">
+                      <h5 className="font-extrabold uppercase text-xs mb-1">{dict.howToApply}</h5>
+                      <p className="text-sm font-medium">{scheme.howToApply}</p>
+                    </div>
+
+                    <div className="mb-3 bg-white text-black border-2 border-black p-2">
+                      <h5 className="font-extrabold uppercase text-xs mb-1">{dict.documentsRequired}</h5>
+                      <ul className="list-disc list-inside text-sm font-medium">
+                        {scheme.documentsRequired.map((doc, i) => (
+                          <li key={i}>{doc}</li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    <a 
+                      href={scheme.portalLink}
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="inline-block bg-black text-white border-2 border-white px-3 py-1 font-extrabold uppercase text-xs shadow-[2px_2px_0px_0px_rgba(255,255,255,1)] hover:-translate-y-1 transition-transform"
+                    >
+                      {dict.applyOnline}
+                    </a>
+                  </div>
+                )}
+              </div>
+            );
+          })}
         </div>
       </div>
 
