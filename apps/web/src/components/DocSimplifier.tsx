@@ -24,6 +24,7 @@ export default function DocSimplifier() {
       fetch(`${API_URL}/api/translate-markdown`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        credentials: "include",
         body: JSON.stringify({ markdown: docResult, language })
       })
       .then(res => res.json())
@@ -65,6 +66,7 @@ export default function DocSimplifier() {
     e.preventDefault();
     e.stopPropagation();
     setDragActive(false);
+    
     if (e.dataTransfer.files && e.dataTransfer.files[0]) {
       await processDocument(e.dataTransfer.files[0]);
     }
@@ -93,6 +95,7 @@ export default function DocSimplifier() {
       const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
       const response = await fetch(`${API_URL}/api/simplify-document`, {
         method: "POST",
+        credentials: "include",
         body: formData,
       });
 

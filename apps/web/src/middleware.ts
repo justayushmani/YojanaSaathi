@@ -1,13 +1,18 @@
-import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
+import { NextResponse } from 'next/server';
+import type { NextRequest } from 'next/server';
 
-// Define the routes that DO NOT require authentication (like sign-in, sign-up, or static assets)
-const isPublicRoute = createRouteMatcher(["/sign-in(.*)", "/sign-up(.*)"]);
-
-export default clerkMiddleware(async (auth, request) => {
-  if (!isPublicRoute(request)) {
-    await auth.protect();
-  }
-});
+export function middleware(request: NextRequest) {
+  // If the user does not have a jwt cookie and is trying to access a protected route
+  // Right now, this is a placeholder. You can define specific protected routes.
+  const path = request.nextUrl.pathname;
+  
+  // Example of protecting a route like /dashboard
+  // if (path.startsWith('/dashboard') && !request.cookies.has('jwt')) {
+  //   return NextResponse.redirect(new URL('/', request.url));
+  // }
+  
+  return NextResponse.next();
+}
 
 export const config = {
   matcher: [

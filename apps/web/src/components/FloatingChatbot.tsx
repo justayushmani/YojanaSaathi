@@ -36,6 +36,7 @@ export default function FloatingChatbot() {
         headers: {
           "Content-Type": "application/json"
         },
+        credentials: "include",
         body: JSON.stringify({
           message: userMessage,
           history: chatHistory.slice(1), // excluding initial static message

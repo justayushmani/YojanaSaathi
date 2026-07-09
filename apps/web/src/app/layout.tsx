@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
-import Header from "../components/Header";
-import FloatingChatbot from "../components/FloatingChatbot";
+import "./globals.css";
 import { LanguageProvider } from "../contexts/LanguageContext";
-import { ClerkProvider } from "@clerk/nextjs";
+import { AuthProvider } from "../contexts/AuthContext";
+import ProtectedApp from "../components/ProtectedApp";
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   variable: "--font-plus-jakarta-sans",
@@ -22,19 +22,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider>
+    <AuthProvider>
       <html
         lang="en"
         className={`${plusJakartaSans.variable} font-sans h-full antialiased`}
       >
         <body className="min-h-full flex flex-col selection:bg-[#FF5A00] selection:text-white">
           <LanguageProvider>
-            <Header />
-            <main className="flex-1 flex flex-col">{children}</main>
-            <FloatingChatbot />
+            <ProtectedApp>
+              {children}
+            </ProtectedApp>
           </LanguageProvider>
         </body>
       </html>
-    </ClerkProvider>
+    </AuthProvider>
   );
 }

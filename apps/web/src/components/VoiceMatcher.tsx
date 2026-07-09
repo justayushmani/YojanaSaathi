@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
-import { Mic, CheckCircle, AlertOctagon, RotateCcw } from "lucide-react";
+import { ArrowRight, Mic, CheckCircle2, AlertTriangle, Play, Square, RotateCcw, AlertOctagon } from "lucide-react";
 import { useLanguage } from "../contexts/LanguageContext";
 
 export default function VoiceMatcher() {
@@ -14,6 +14,8 @@ export default function VoiceMatcher() {
 
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const audioChunksRef = useRef<BlobPart[]>([]);
+  const [isAudioPlaying, setIsAudioPlaying] = useState(false);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   // --- Voice Handlers ---
   const startRecording = async () => {
@@ -65,7 +67,8 @@ export default function VoiceMatcher() {
       const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
       const response = await fetch(`${API_URL}/api/match-voice`, {
         method: "POST",
-        body: formData,
+        credentials: "include",
+        body: formData
       });
 
       const data = await response.json();
@@ -92,6 +95,7 @@ export default function VoiceMatcher() {
       fetch(`${API_URL}/api/recommend-schemes`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        credentials: "include",
         body: JSON.stringify({ profile: voiceResult.profile, language })
       })
       .then(res => res.json())

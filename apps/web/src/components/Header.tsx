@@ -1,16 +1,16 @@
 "use client";
 
 import React, { useState } from "react";
-import { User, Info, Globe, X } from "lucide-react";
+import { User, Info, Globe, X, LogOut } from "lucide-react";
 import { useLanguage, LanguageType } from "../contexts/LanguageContext";
-
-import { SignInButton, UserButton, useAuth } from "@clerk/nextjs";
+import { useAuth } from "../contexts/AuthContext";
 
 export default function Header() {
   const { language, setLanguage, dict } = useLanguage();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [isAboutModalOpen, setIsAboutModalOpen] = useState(false);
-  const { isLoaded, isSignedIn } = useAuth();
+  const [userDropdownOpen, setUserDropdownOpen] = useState(false);
+  const { user, logout } = useAuth();
 
   return (
     <>
@@ -62,24 +62,32 @@ export default function Header() {
               <Info size={18} strokeWidth={3} /> {dict.aboutPlatform}
             </button>
 
-            {/* Clerk Authentication */}
-            {isLoaded && !isSignedIn && (
-              <SignInButton>
-                <button className="flex items-center gap-2 bg-[#1D4ED8] text-white border-2 border-black px-4 py-2 font-black uppercase text-sm shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:bg-[#FF5A00] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[0px_0px_0px_0px_rgba(0,0,0,1)] transition-all">
-                  Sign In
+            {/* Custom Authentication */}
+            {user && (
+              <div className="relative">
+                <button 
+                  onClick={() => setUserDropdownOpen(!userDropdownOpen)}
+                  className="w-10 h-10 bg-[#FF5A00] text-white border-2 border-black rounded-none shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] flex items-center justify-center hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] transition-all font-black text-lg uppercase"
+                >
+                  {user.name.charAt(0)}
                 </button>
-              </SignInButton>
-            )}
-            
-            {isLoaded && isSignedIn && (
-              <div className="w-10 h-10 border-2 border-black rounded-full overflow-hidden shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] flex items-center justify-center hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] transition-all">
-                <UserButton 
-                  appearance={{
-                    elements: {
-                      userButtonAvatarBox: "w-full h-full rounded-none"
-                    }
-                  }}
-                />
+                {userDropdownOpen && (
+                  <div className="absolute right-0 mt-2 w-48 bg-white border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] flex flex-col z-50">
+                    <div className="px-4 py-3 border-b-2 border-black">
+                      <p className="font-black uppercase text-sm truncate">{user.name}</p>
+                      <p className="text-xs font-bold text-gray-600 truncate">{user.email}</p>
+                    </div>
+                    <button
+                      onClick={() => {
+                        setUserDropdownOpen(false);
+                        logout();
+                      }}
+                      className="px-4 py-2 flex items-center gap-2 text-left font-bold uppercase hover:bg-red-500 hover:text-white transition-colors"
+                    >
+                      <LogOut size={16} strokeWidth={3} /> Logout
+                    </button>
+                  </div>
+                )}
               </div>
             )}
           </div>
