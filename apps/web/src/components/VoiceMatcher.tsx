@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
-import { ArrowRight, Mic, CheckCircle, AlertTriangle, Play, Square, RotateCcw, AlertOctagon } from "lucide-react";
+import { ArrowRight, Mic, CheckCircle2, AlertTriangle, Play, Square, RotateCcw, AlertOctagon } from "lucide-react";
 import { useLanguage } from "../contexts/LanguageContext";
 
 export default function VoiceMatcher() {
@@ -190,7 +190,7 @@ export default function VoiceMatcher() {
         <div className="w-full mt-12 animate-in fade-in slide-in-from-bottom-4">
           <div className="border-4 border-black bg-white p-6 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]">
             <h3 className="text-2xl font-extrabold uppercase mb-6 flex items-center gap-2 bg-[#1D4ED8] text-white p-2 border-2 border-black w-fit shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
-              <CheckCircle size={28} strokeWidth={3} /> {dict.profileExtracted}
+              <CheckCircle2 size={28} strokeWidth={3} /> {dict.profileExtracted}
             </h3>
             
             <div className="grid grid-cols-2 gap-4 mb-8 font-bold text-lg">
