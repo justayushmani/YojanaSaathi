@@ -73,7 +73,7 @@ export class VoiceController {
       console.error('Error in VoiceController.handleAudioMatch:', error);
       res.status(500).json({
         success: false,
-        error: 'An internal error occurred while processing the audio.',
+        error: 'An internal error occurred while processing the audio. Details: ' + error.message,
         details: error.message
       });
     }
@@ -100,7 +100,7 @@ export class VoiceController {
       console.error('Error in VoiceController.handleRecommendSchemes:', error);
       res.status(500).json({
         success: false,
-        error: 'Could not fetch scheme recommendations.',
+        error: 'Could not fetch scheme recommendations. Details: ' + error.message,
         details: error.message
       });
     }
@@ -127,7 +127,7 @@ export class VoiceController {
       console.error('Error in VoiceController.handleTranslateMarkdown:', error);
       res.status(500).json({
         success: false,
-        error: 'Could not translate markdown.',
+        error: 'Could not translate markdown. Details: ' + error.message,
         details: error.message
       });
     }
@@ -156,7 +156,7 @@ export class VoiceController {
       console.error('Error in VoiceController.handleDocumentSimplify:', error);
       res.status(500).json({
         success: false,
-        error: 'Could not process the document image.',
+        error: 'Could not process the document image. Details: ' + error.message,
         details: error.message
       });
     }
@@ -185,7 +185,7 @@ export class VoiceController {
       console.error('Error in VoiceController.handleChat:', error);
       res.status(500).json({
         success: false,
-        error: 'Could not process chat message.',
+        error: 'Could not process chat message. Details: ' + error.message,
         details: error.message
       });
     }
