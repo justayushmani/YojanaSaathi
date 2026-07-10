@@ -5,7 +5,10 @@ import pool from '../db/postgres';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'super-secret-key-change-me-in-prod';
 const isProd = process.env.NODE_ENV === 'production' || process.env.RENDER === 'true';
+<<<<<<< HEAD
 
+=======
+>>>>>>> 51501f15e73c0bfdb8b10ba941e6bf66baf51b5d
 export class AuthController {
   static async signup(req: Request, res: Response): Promise<void> {
     try {
@@ -83,7 +86,11 @@ export class AuthController {
       // Set cookie
       res.cookie('jwt', token, {
         httpOnly: true,
+<<<<<<< HEAD
         secure: isProd,
+=======
+       secure: isProd,
+>>>>>>> 51501f15e73c0bfdb8b10ba941e6bf66baf51b5d
         sameSite: isProd ? 'none' : 'lax',
         maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
       });
@@ -98,8 +105,13 @@ export class AuthController {
   static async logout(req: Request, res: Response): Promise<void> {
     res.cookie('jwt', '', {
       httpOnly: true,
+<<<<<<< HEAD
       secure: isProd,
       sameSite: isProd ? 'none' : 'lax',
+=======
+       secure: isProd,
+        sameSite: isProd ? 'none' : 'lax',
+>>>>>>> 51501f15e73c0bfdb8b10ba941e6bf66baf51b5d
       expires: new Date(0) // Expire immediately
     });
     res.status(200).json({ message: 'Logged out successfully' });
