@@ -13,16 +13,28 @@ export class GeminiService {
     }
 
     let lastError: any;
+    const fallbackModels = [
+      'gemini-1.5-flash',
+      'gemini-1.5-flash-latest',
+      'gemini-1.5-pro',
+      'gemini-1.5-pro-latest',
+      'gemini-1.0-pro-vision-latest',
+      'gemini-pro',
+      'gemini-pro-vision'
+    ];
 
     for (let i = 0; i < keys.length; i++) {
-      try {
-        const genAI = new GoogleGenerativeAI(keys[i]);
-        const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' }); 
-        return await operation(model);
-      } catch (error: any) {
-        console.warn(`[API Fallback] Key ${i + 1} failed: ${error.message}`);
-        lastError = error;
-        // If it's a structural error (e.g., bad request), we still try the next key just in case it's an account restriction issue.
+      const genAI = new GoogleGenerativeAI(keys[i]);
+      
+      for (const modelName of fallbackModels) {
+        try {
+          const model = genAI.getGenerativeModel({ model: modelName }); 
+          return await operation(model);
+        } catch (error: any) {
+          console.warn(`[API Fallback] Key ${i + 1} with Model ${modelName} failed: ${error.message}`);
+          lastError = error;
+          // Continue to next model if it fails
+        }
       }
     }
     
