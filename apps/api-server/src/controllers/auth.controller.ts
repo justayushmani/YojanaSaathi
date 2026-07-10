@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken';
 import pool from '../db/postgres';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'super-secret-key-change-me-in-prod';
-
+const isProd = process.env.NODE_ENV === 'production' || process.env.RENDER === 'true';
 export class AuthController {
   static async signup(req: Request, res: Response): Promise<void> {
     try {
@@ -39,8 +39,8 @@ export class AuthController {
       // Set cookie
       res.cookie('jwt', token, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+        secure: isProd,
+        sameSite: isProd ? 'none' : 'lax',
         maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
       });
 
@@ -82,8 +82,8 @@ export class AuthController {
       // Set cookie
       res.cookie('jwt', token, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+       secure: isProd,
+        sameSite: isProd ? 'none' : 'lax',
         maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
       });
 
@@ -97,8 +97,8 @@ export class AuthController {
   static async logout(req: Request, res: Response): Promise<void> {
     res.cookie('jwt', '', {
       httpOnly: true,
-       secure: process.env.NODE_ENV === 'production',
-      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+       secure: isProd,
+        sameSite: isProd ? 'none' : 'lax',
       expires: new Date(0) // Expire immediately
     });
     res.status(200).json({ message: 'Logged out successfully' });
