@@ -1,7 +1,10 @@
+import dotenv from 'dotenv';
+// Load environment variables FIRST before importing controllers
+dotenv.config();
+
 import express from 'express';
 import cors from 'cors';
 import multer from 'multer';
-import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 import { VoiceController } from './controllers/voice.controller';
 import { AuthController } from './controllers/auth.controller';
@@ -10,9 +13,6 @@ import { setDefaultResultOrder } from 'node:dns';
 
 // Fix Node.js fetch failing on some networks with IPv6 for Google APIs
 setDefaultResultOrder('ipv4first');
-
-// Load environment variables
-dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 4000;

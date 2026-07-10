@@ -22,7 +22,7 @@ export default function AuthModal({ isOpen, onClose, forceOpen = false }: AuthMo
     e.preventDefault();
     setError('');
 
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
+    const apiUrl = ""; // Handled by Next.js rewrites proxy
     const endpoint = isLogin ? '/api/auth/login' : '/api/auth/signup';
     
     const body = isLogin ? { email, password } : { name, email, password };

@@ -30,7 +30,7 @@ export default function FloatingChatbot() {
     setIsChatLoading(true);
 
     try {
-      const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
+      const API_URL = ""; // Handled by Next.js rewrites proxy
       const response = await fetch(`${API_URL}/api/chat`, {
         method: "POST",
         headers: {

@@ -1,10 +1,11 @@
 import { Pool } from 'pg';
-
+import dotenv from 'dotenv';
+dotenv.config();
 // Initialize connection pool
 // Render/Supabase/Neon provide DATABASE_URL connection strings
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL || 'postgresql://postgres:postgres@localhost:5432/yojana',
-  ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false
+  ssl: process.env.DATABASE_URL ? { rejectUnauthorized: false } : false
 });
 
 // Test connection and initialize users table

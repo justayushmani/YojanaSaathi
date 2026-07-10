@@ -64,7 +64,7 @@ export default function VoiceMatcher() {
       formData.append("audio", audioBlob, "recording.webm");
       formData.append("language", language);
 
-      const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
+      const API_URL = ""; // Handled by Next.js rewrites proxy
       const response = await fetch(`${API_URL}/api/match-voice`, {
         method: "POST",
         credentials: "include",
@@ -91,7 +91,7 @@ export default function VoiceMatcher() {
     if (voiceStatus === "success" && voiceResult?.profile) {
       // Show processing status while translating
       setVoiceStatus("processing");
-      const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
+      const API_URL = ""; // Handled by Next.js rewrites proxy
       fetch(`${API_URL}/api/recommend-schemes`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },

@@ -20,7 +20,7 @@ export default function DocSimplifier() {
   useEffect(() => {
     if (docStatus === "success" && docResult) {
       setDocStatus("processing");
-      const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
+      const API_URL = ""; // Handled by Next.js rewrites proxy
       fetch(`${API_URL}/api/translate-markdown`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -92,7 +92,7 @@ export default function DocSimplifier() {
       formData.append("language", language);
 
       setDocStatus("processing");
-      const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
+      const API_URL = ""; // Handled by Next.js rewrites proxy
       const response = await fetch(`${API_URL}/api/simplify-document`, {
         method: "POST",
         credentials: "include",

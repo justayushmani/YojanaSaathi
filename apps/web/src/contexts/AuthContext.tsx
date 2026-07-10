@@ -30,7 +30,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     // Check if user is logged in on mount
     const checkAuth = async () => {
       try {
-        const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
+        const apiUrl = ''; // Handled by Next.js rewrites proxy
         const res = await fetch(`${apiUrl}/api/auth/me`, {
           // Include credentials to send cookie automatically
           credentials: 'include',
@@ -50,7 +50,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const logout = async () => {
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
+      const apiUrl = ''; // Handled by Next.js rewrites proxy
       await fetch(`${apiUrl}/api/auth/logout`, {
         method: 'POST',
         credentials: 'include',
